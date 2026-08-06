@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "question_id": "Q4",
+  "rigor_profile": "lean",
+  "current_gate": "G4",
+  "status": "completed",
+  "artifacts": {
+    "data_recommendations": "results/Q4/reports/q4_data_recommendations.md"
+  },
+  "blockers": [],
+  "next_action": {
+    "owner": "human",
+    "skill": null,
+    "reason": "Q1-Q4 lean模式全完成。如需进入submission模式开始论文写作，请指示。"
+  },
+  "updated_at": "2026-08-06T05:30:00Z"
+}

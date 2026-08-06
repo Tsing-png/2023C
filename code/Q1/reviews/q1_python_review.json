@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "language": "python",
+  "reviewed_files": ["code/Q1/q1_main.py", "code/Q1/q1_baseline.py"],
+  "decision_id": "q1_method_choice",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": [
+        "py_compile: 两个文件均通过编译检查",
+        "两次独立运行 (run1 + re-run) 均 exit code=0，无运行时异常",
+        "Prophet 不存在的优雅降级：自动切换到 STL 分解并写入 warning"
+      ]
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": [
+        "所有输入从 workspace/data_clean/ 读取（非 raw），遵守 settings.json deny 规则",
+        "product_info_with_loss.csv, sales_normal_only.csv 路径正确",
+        "列名引用与数据画像中的字段一致：单品编码, 销量(kg), 销售单价(元/kg)",
+        "退货已在清洗阶段排除 (sales_normal_only.csv)，代码未对退货做额外处理",
+        "品类映射 (cat_map) 通过附件1 多对一关系，无歧义"
+      ]
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": [
+        "M1 (main): Prophet/STL去趋势 → Spearman残差相关 → DTW形状聚类 → Granger因果网络 — 与 method_card 完全一致",
+        "M2 (baseline): 原始Spearman相关 + K-means++聚类 — 与 5/5 文献标准一致",
+        "单品层面仅分析 >=90 天销售记录的 116 个stable items (按 code_plan)",
+        "去趋势使用了 STL (period=7, robust=True) 因 Prophet 未安装，行为等价且记录警告",
+        "114-130 行：残差 Spearman + 显著性检验 p<0.05 — 正确"
+      ]
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": [
+        "固定随机种子 SEED=2026，np.random.seed(SEED) 在所有 K-means 初始化中使用",
+        "两次独立运行输出指标完全一致 (spearman_raw_mean_abs=0.393346... 不变)",
+        "run_summary.json 记录 seed=2026, pandas/numpy/scipy 版本",
+        "运行时间记录在 run_summary 中 (M1 executable, <10s)"
+      ]
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": [
+        "5 个 CSV 表 + 6 个 PNG 图 + 1 个 metrics JSON + 1 个 run_summary.json — 全部通过 on-disk 验证",
+        "M1/M2 对比指标已定义：raw vs residual Spearman mean |r|，聚类 silhouette，Granger 边数",
+        "degeneracy check 通过：corr range [-0.21, 0.63]，HC silhouette >=0.166 (可接受)",
+        "run_summary.json schema_version=1，包含 method/status/inputs/outputs/warnings/environment",
+        "Warnings 记录：Prophet 不可用 + 130 个低持续性单品被排除"
+      ]
+    }
+  },
+  "findings": [],
+  "verdict": "PASSED",
+  "reviewed_at": "2026-08-06T03:30:00Z"
+}

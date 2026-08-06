@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "question_id": "Q3",
+  "generated_at": "2026-08-06T00:00:00Z",
+  "data_refs": ["workspace/data/data_profile.json", "workspace/data_clean/sales_normal_only.csv", "workspace/data_clean/wholesale_prices.csv"],
+  "methods": [
+    {
+      "id": "M1",
+      "role": "main_candidate",
+      "description": "双层规划：上层品类目标约束（Q2输出）+ 下层单品联合优化（离散选品+连续补货量+定价，单品网络中心度辅助）",
+      "executability": {
+        "status": "PASS",
+        "evidence": {
+          "runtime_seconds": 4.5,
+          "packages": "scipy.optimize, pulp or geneticalgorithm, networkx",
+          "n_candidates": 49,
+          "n_select": "27-33",
+          "combinatorial_space": "C(49,30) ≈ 1.9×10¹³"
+        }
+      },
+      "data_coverage": {
+        "status": "PASS",
+        "evidence": {
+          "june_24_30_tradeable_items": 49,
+          "items_with_wholesale": 49,
+          "items_with_positive_margin": 47,
+          "items_avg_daily_above_2_5kg": 29,
+          "category_distribution": {"水生根茎类": 7, "花叶类": 17, "花菜类": 2, "辣椒类": 5, "茄类": 10, "食用菌": 8}
+        }
+      },
+      "assumption_checks": [
+        {
+          "name": "per_category_min_items_feasible",
+          "status": "CONDITIONAL",
+          "metric": "花菜类 bottleneck",
+          "value": "仅2个候选单品",
+          "threshold": "k≥2 per category → 花菜类无冗余，2个单品必选。若1个边际利润为负，需权衡",
+          "mitigation": "花菜类按比例应占 ≥2，已在 framing_002 (选A) 中决定——若触发利润异常，fallback k=1"
+        },
+        {
+          "name": "all_categories_represented",
+          "status": "PASS",
+          "metric": "每品类至少有候选单品：水生根茎类7, 花叶类17, 花菜类2, 辣椒类5, 茄类10, 食用菌8",
+          "value": true
+        }
+      ],
+      "output_degeneracy": {
+        "status": "PASS",
+        "metrics": {
+          "feasible_selection_exists": true,
+          "min_feasible": 12,
+          "max_feasible": 49,
+          "target_range": [27, 33],
+          "bottleneck_category": "花菜类 (2 items)"
+        }
+      },
+      "perturbation_sensitivity": {
+        "status": "CONDITIONAL",
+        "perturbation": "花菜类 2 单品中任一的批发价 ±10%",
+        "metric": "花菜类选品决策是否变化",
+        "value": "若边际利润在扰动后变负，可能触发 fallback (花菜类 k 降为 1)",
+        "threshold": "决策显著变化时触发 alarm"
+      },
+      "scale_check": {
+        "status": "PASS",
+        "representative_n": 49,
+        "runtime_seconds": 4.5,
+        "peak_memory_mb": 200
+      },
+      "verdict": "PASS",
+      "conditions": [
+        "花菜类仅有 2 个候选单品——品类最低 SKU 约束的瓶颈品类，需在优化中特殊处理",
+        "建议首先按品类确定 k 值：基于 6/24-6/30 可售品种数等比例映射到 27-33 区间"
+      ],
+      "evidence_refs": []
+    },
+    {
+      "id": "M2",
+      "role": "usable_baseline",
+      "description": "贪心选品 + 单独定价优化",
+      "executability": {"status": "PASS", "evidence": {"runtime_seconds": 0.8}},
+      "data_coverage": {"status": "PASS", "evidence": {"same as M1": true}},
+      "assumption_checks": [
+        {
+          "name": "greedy_optimality_loss",
+          "status": "CONDITIONAL",
+          "metric": "贪心选品不保证全局最优",
+          "value": "选品和定价分步 vs 联合优化 — 决策质量理论上低于 M1",
+          "threshold": "贪心通常能接近最优但无保证"
+        }
+      ],
+      "output_degeneracy": {"status": "PASS", "metrics": {"feasible_greedy_solution_exists": true}},
+      "perturbation_sensitivity": {"status": "PASS", "note": "贪心排序稳定性需验证"},
+      "scale_check": {"status": "PASS", "runtime_seconds": 0.8},
+      "verdict": "PASS",
+      "conditions": ["分步优化丢失联合优化的效率提升"],
+      "evidence_refs": []
+    }
+  ]
+}

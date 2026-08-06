@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "question_id": "Q3",
+  "language": "python",
+  "reviewed_files": ["code/Q3/q3_main.py", "code/Q3/q3_baseline.py"],
+  "decision_id": "q3_method_choice",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": [
+        "py_compile 通过，无语法错误",
+        "两次独立运行均 exit code=0",
+        "scipy.optimize.minimize_scalar 收敛于所有 30 个单品"
+      ]
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": [
+        "仅从 workspace/data_clean/ 读取",
+        "Q2 M1 输出 (q2_optimal_decisions.csv) 作为品类需求目标输入 — 正确的前向依赖",
+        "6月24-30日候选单品正确从 sales 和 wholesale 数据提取 (49 candidates)",
+        "item_loss_rate 用于计算 effective cost = wholesale / (1 - loss_rate)"
+      ]
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": [
+        "M1: 双层规划 (品类 min SKU → 联合选品+定价+补货优化) — 与 method_card 一致",
+        "M2: 贪心选品 (按 profit_per_day) + 固定 r=0.20 独立定价 — 与文献标准一致",
+        "framing_002(A): 品类最低 SKU 数约束 — k 基于可售品种等比例分配，总和落入 [27,33]",
+        "最小陈列量 2.5 kg 约束: 在 demand floor 和 optimize 中均有检查",
+        "品类需求满足: 通过 Q2 M1 品类总量作为参考目标显示在 category_fulfillment 图中",
+        "花菜类仅有 2 个候选单品 — 全部选中，符合 probe 预先识别的瓶颈"
+      ]
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": [
+        "固定 SEED=2026; pandas rank() 确定性; scipy 优化确定性",
+        "两次独立运行 n_items=30, total_profit=1225.21 完全不变",
+        "run_summary 记录 seed + environment"
+      ]
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": [
+        "2 个 CSV 表 (q3_selected_items, q3_category_summary) + 3 个 PNG 图 — 全部存在",
+        "q3_metrics.json 含 8 个关键指标 (n_items, sku_range_check, min_2_5kg_check...)",
+        "run_summary.json 完整，含 fallback 触发评估",
+        "constraint check: SKU=30 (27-33 PASS), min_2.5kg PASS, category_mins PASS",
+        "degeneracy check 结果: 所有单品无负利润 (PASS)",
+        "fallback trigger: NOT triggered (花菜类 item 利润为正)"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "severity": "MEDIUM",
+      "check": "method_alignment",
+      "detail": "Q3 加成率优化边界 [0.05, 1.5] 中，28/30 单品触顶上界 (150%)。这说明在当前 elasticity 参数下，模型认为更高的加成率总是更优 — 但实际上受限于约束。弹性估计来自 Q2 品类级 (非单品级)，直接应用于单品可能高估最优加成率",
+      "action": "在论文中明确标注：(1) 单品弹性使用了品类级估计作为近似；(2) 最优加成率的取值上界受限，真实最优可能在更高处，但需考虑消费者心理价格上限"
+    },
+    {
+      "severity": "LOW",
+      "check": "output_contract",
+      "detail": "M2 baseline 未生成可视化 — 按 code plan M2 仅需表格和 metrics，不阻塞 G3",
+      "action": "如需对比，可在结果分析时注明 M1 比 M2 在相同 30 SKU 下利润高约 5 倍 (1225 vs 253 元)"
+    }
+  ],
+  "verdict": "PASSED",
+  "reviewed_at": "2026-08-06T03:30:00Z"
+}

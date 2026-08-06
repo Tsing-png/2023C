@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "question_id": "Q2",
+  "language": "python",
+  "reviewed_files": ["code/Q2/q2_main.py", "code/Q2/q2_baseline.py"],
+  "decision_id": "q2_method_choice",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": [
+        "py_compile 通过（无语法错误）",
+        "两次独立运行均 exit code=0",
+        "唯一运行时修复：max() → np.maximum()（数组比较），已解决"
+      ]
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": [
+        "从 workspace/data_clean/ 读取 sales_normal_only.csv, wholesale_prices.csv, product_info_with_loss.csv",
+        "品类映射 (cat_map) 与附件1 一致",
+        "cat_loss_rate 使用附件4 品类级损耗率（forward fill 处理缺失）",
+        "批发价格缺失由 groupby.ffill() 填充 — 假设周末价格与最近工作日相同（合理）",
+        "Q3 代码读取 Q2 输出文件 (q2_optimal_decisions.csv) 作为品类目标 — 正确的前向依赖"
+      ]
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": [
+        "M1: 双对数需求弹性 (OLS lnQ~lnP) 估计 → Prophet/ETS 区间预测 → Newsvendor 内生加成率优化 → 鲁棒批发价扰动 — 与 method_card 完全一致",
+        "M2: ARIMA 预测 + 线性回归 Q=β₀+β₁P + 固定 r=0.20 + 确定性 NLP — 与文献标准做法一致",
+        "framing_001(B): 加成率内生 — r 作为优化变量，bounds=[0.05, 1.5]，每品类每天独立优化",
+        "framing_004(C): 输出含不确定性区间 — profit_wholesale_plus10pct 列记录鲁棒性分析",
+        "报童 critical ratio 计算正确: CR = (P-C)/(P) 用于确定最优补货量"
+      ]
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": [
+        "固定 random_seed=2026",
+        "ETS/ARIMA 模型默认确定性（无随机初始化）",
+        "scipy.optimize.minimize_scalar 确定性",
+        "两次独立运行 total_expected_profit_7d=2587.13 完全稳定",
+        "run_summary 记录 seed + 环境版本"
+      ]
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": [
+        "4 个 CSV 表 (q2_optimal_decisions, q2_replenishment_pivot, q2_pricing_pivot, q2_markup_pivot) — 全部存在",
+        "3 个 PNG 图 (q2_optimal_plan, q2_markup_rates, q2_profit_robustness) — 全部存在",
+        "q2_metrics.json 含 8 个关键指标",
+        "run_summary.json 完整",
+        "degeneracy check: markup rates 范围 [0.081, 1.500] — 有意义的变异 (PASS)",
+        "CR=0.182 对应花叶类低加成率 — 生鲜高损耗特征的合理结果，在 method_card risk 中预先标记"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "severity": "LOW",
+      "check": "method_alignment",
+      "detail": "M1 双对数模型使用全部 3 年数据估计弹性，但实际可能随时间变化（结构变化），未做 rolling-window 验证",
+      "action": "在论文中注明弹性估计假定参数时不变，必要时在 robustness 中展示 rolling elasticity"
+    },
+    {
+      "severity": "INFO",
+      "check": "output_contract",
+      "detail": "M2 (baseline) 线性回归 R² 极低 (0.013-0.123)，说明品类级的简单线性价格-销量关系数据不支持 — 这反证 M1 双对数模型的必要性，可在论文中用于论证方法选择",
+      "action": "无需修改代码，在 result_analysis 中提及对比证据"
+    }
+  ],
+  "verdict": "PASSED",
+  "reviewed_at": "2026-08-06T03:30:00Z"
+}

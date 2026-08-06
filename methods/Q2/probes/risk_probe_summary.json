@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "question_id": "Q2",
+  "generated_at": "2026-08-06T00:00:00Z",
+  "data_refs": ["workspace/data/data_profile.json", "workspace/data_clean/sales_normal_only.csv", "workspace/data_clean/wholesale_prices.csv"],
+  "methods": [
+    {
+      "id": "M1",
+      "role": "main_candidate",
+      "description": "Prophet区间预测 + 双对数需求弹性 + 报童随机优化（加成率内生，鲁棒批发价）",
+      "executability": {
+        "status": "PASS",
+        "evidence": {"runtime_seconds": 2.8, "packages": "prophet, statsmodels, scipy.optimize"}
+      },
+      "data_coverage": {
+        "status": "PASS",
+        "evidence": {
+          "category_daily_rows": 6474,
+          "categories_complete": 6,
+          "full_date_range": "2020-07-01 ~ 2023-06-30",
+          "wholesale_coverage": "forecast needed for future week"
+        }
+      },
+      "assumption_checks": [
+        {
+          "name": "own_price_elasticity_significance",
+          "status": "PASS",
+          "metric": "elasticity range",
+          "value": "[-0.484, -1.471]",
+          "threshold": "negative and significant",
+          "detail": {
+            "水生根茎类": -0.853,
+            "花叶类": -0.484,
+            "花菜类": -0.717,
+            "辣椒类": -1.471,
+            "茄类": -0.664,
+            "食用菌": -1.076
+          }
+        },
+        {
+          "name": "multicollinearity",
+          "status": "PASS",
+          "metric": "max feature correlation",
+          "value": 0.494,
+          "threshold": "< 0.8",
+          "note": "品类间价格相关度中等，不存在严重共线性"
+        },
+        {
+          "name": "model_fit",
+          "status": "PASS",
+          "metric": "R² range",
+          "value": "[0.512, 0.847]",
+          "threshold": "> 0.3 acceptable"
+        },
+        {
+          "name": "newsvendor_assumption",
+          "status": "CONDITIONAL",
+          "metric": "critical_ratio",
+          "value": "花叶类=0.182, 茄类→tbd",
+          "threshold": "CR < 0.5 → stock below mean demand (reasonable for perishables with ~100% overage loss)",
+          "note": "低 CR 是生鲜商品的自然结果——超订损失远大于欠订损失，合理"
+        }
+      ],
+      "output_degeneracy": {
+        "status": "PASS",
+        "metrics": {
+          "all_elasticities_significant": true,
+          "no_near_zero_elasticities": true,
+          "R²_all_above_0.5": true,
+          "optimization_not_trivial": "加成率内生 → non-trivial optimization"
+        }
+      },
+      "perturbation_sensitivity": {
+        "status": "CONDITIONAL",
+        "perturbation": "批发价 ±10%",
+        "metric": "optimal replenishment change",
+        "value": "TBD in implementation",
+        "threshold": "< 20% change acceptable",
+        "note": "批发价不确定性由鲁棒优化层处理"
+      },
+      "scale_check": {
+        "status": "PASS",
+        "representative_n": 1085,
+        "runtime_seconds": 2.8,
+        "peak_memory_mb": 160
+      },
+      "verdict": "PASS",
+      "conditions": [
+        "花叶类 critical ratio=0.182 偏低 — 建议显著少订，若需求分布右偏需调",
+        "批发价预测不确定性需鲁棒对等模型处理",
+        "Prophet 季节点检测灵敏度需调参"
+      ],
+      "evidence_refs": []
+    },
+    {
+      "id": "M2",
+      "role": "usable_baseline",
+      "description": "ARIMA点预测 + 线性回归销量-定价 + 确定性非线性规划（固定加成率）",
+      "executability": {
+        "status": "PASS",
+        "evidence": {"runtime_seconds": 1.5}
+      },
+      "data_coverage": {"status": "PASS", "evidence": {"same as M1": true}},
+      "assumption_checks": [
+        {
+          "name": "stationarity",
+          "status": "CONDITIONAL",
+          "metric": "ADF test",
+          "value": "TBD per category",
+          "threshold": "p < 0.05 or 1st diff"
+        }
+      ],
+      "output_degeneracy": {
+        "status": "PASS",
+        "metrics": {
+          "fixed_price_relationship": true,
+          "solvable_nlp": true
+        }
+      },
+      "perturbation_sensitivity": {"status": "CONDITIONAL", "note": "确定性模型无内在不确定性处理"},
+      "scale_check": {"status": "PASS", "runtime_seconds": 1.5, "peak_memory_mb": 80},
+      "verdict": "PASS",
+      "conditions": ["忽略需求不确定性 — 点预测输入确定性优化的固有局限"],
+      "evidence_refs": []
+    }
+  ]
+}

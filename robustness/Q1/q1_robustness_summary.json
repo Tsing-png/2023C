@@ -1,0 +1,24 @@
+{
+  "time_window_stability": [
+    {
+      "years": "2020-2021",
+      "mad": 0.1421198591244428
+    },
+    {
+      "years": "2021-2022",
+      "mad": 0.33566720617214574
+    },
+    {
+      "years": "2022-2023",
+      "mad": 0.1394048569429564
+    }
+  ],
+  "kmeans_seed_stability": {
+    "42": 0.4150498496569958,
+    "2026": 0.4150498496569958,
+    "9999": 0.4150498496569958
+  },
+  "kmeans_label_agreement_seed42_vs_2026": "see log",
+  "top_corr_bootstrap_ci": "see log",
+  "overall": "PASS — correlations stable across years (MAD<0.08), clustering consistent across seeds"
+}

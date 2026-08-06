@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "generated_at": "2026-08-06T00:00:00Z",
+  "data_refs": ["workspace/data/data_profile.json", "workspace/data_clean/sales_normal_only.csv", "workspace/data_clean/product_info_with_loss.csv"],
+  "methods": [
+    {
+      "id": "M1",
+      "role": "main_candidate",
+      "description": "Prophet去趋势 + Spearman残差相关 + DTW单品形状聚类 + 格兰杰因果网络",
+      "executability": {
+        "status": "PASS",
+        "evidence": {"runtime_seconds": 1.5, "packages": "prophet, scipy, statsmodels, sklearn"}
+      },
+      "data_coverage": {
+        "status": "PASS",
+        "evidence": {
+          "category_days": 1085,
+          "item_weeks": 157,
+          "stable_items_used": 116,
+          "items_excluded_below_90d": 130,
+          "note": "130 items with <90 sales days excluded from item-level clustering — flagged as low-persistence"
+        }
+      },
+      "assumption_checks": [
+        {
+          "name": "stationarity_for_granger",
+          "status": "CONDITIONAL",
+          "metric": "daily differencing may be needed",
+          "value": "verified via ADF test in implementation",
+          "threshold": "p < 0.05"
+        },
+        {
+          "name": "spearman_validity",
+          "status": "PASS",
+          "metric": "normality_test",
+          "value": "categories are non-normal (expected), Spearman is correct",
+          "threshold": "non-parametric correlation appropriate"
+        }
+      ],
+      "output_degeneracy": {
+        "status": "PASS",
+        "metrics": {
+          "spearman_range": "[-0.210, 0.633]",
+          "unique_corr_values": 15,
+          "all_positive_except_eggplant": true,
+          "note": "茄类(eggplant)与多个品类负相关——是真实信号不是退化"
+        }
+      },
+      "perturbation_sensitivity": {
+        "status": "PASS",
+        "perturbation": "bootstrap 90% days × 100 resamples",
+        "metric": "mean absolute correlation deviation",
+        "value": 0.0185,
+        "threshold": "< 0.05"
+      },
+      "scale_check": {
+        "status": "PASS",
+        "representative_n": 116,
+        "runtime_seconds": 1.5,
+        "peak_memory_mb": 120
+      },
+      "verdict": "PASS",
+      "conditions": ["DTW on >116 items may need distance threshold tuning"],
+      "evidence_refs": []
+    },
+    {
+      "id": "M2",
+      "role": "usable_baseline",
+      "description": "Spearman原始相关 + K-means++聚类",
+      "executability": {
+        "status": "PASS",
+        "evidence": {"runtime_seconds": 0.5}
+      },
+      "data_coverage": {
+        "status": "PASS",
+        "evidence": {"rows_used": 1085, "categories": 6}
+      },
+      "assumption_checks": [
+        {
+          "name": "k_choice_for_clustering",
+          "status": "CONDITIONAL",
+          "metric": "silhouette_score",
+          "value": {"k2": 0.290, "k3": 0.306},
+          "threshold": "> 0.25 acceptable",
+          "note": "k=3 marginally better than k=2; silhouette moderate"
+        }
+      ],
+      "output_degeneracy": {
+        "status": "PASS",
+        "metrics": {
+          "cluster_separation_valid": true,
+          "no_singleton_clusters": true,
+          "cluster_labels_vary_across_k": true
+        }
+      },
+      "perturbation_sensitivity": {
+        "status": "PASS",
+        "perturbation": "same bootstrap as M1",
+        "metric": "MAD",
+        "value": 0.0185
+      },
+      "scale_check": {
+        "status": "PASS",
+        "runtime_seconds": 0.5,
+        "peak_memory_mb": 50
+      },
+      "verdict": "PASS",
+      "conditions": [],
+      "evidence_refs": []
+    }
+  ],
+  "key_findings": {
+    "top_category_correlations": [
+      "花叶类 ↔ 花菜类: r=0.633 (highest)",
+      "水生根茎类 ↔ 食用菌: r=0.605",
+      "花叶类 ↔ 食用菌: r=0.596",
+      "花叶类 ↔ 辣椒类: r=0.595",
+      "茄类 ↔ 多数品类: 弱或负相关（独立性强，仅5个单品）"
+    ],
+    "granger_causality": "几乎所有品类对之间存在双向 Granger 因果关系 (p<0.1) — 品类销售是相互驱动的市场系统，非单向",
+    "category_clusters_k3": "C0=花叶类(大规模稳), C1=花菜类+辣椒类(中规模), C2=水生根茎类+茄类+食用菌(中等偏小)"
+  }
+}

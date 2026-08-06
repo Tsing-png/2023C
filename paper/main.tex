@@ -1,0 +1,52 @@
+\documentclass[12pt,a4paper]{ctexart}
+
+% ========== 页面设置 ==========
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage{cite}
+
+% ========== 格式设置 ==========
+\setlength{\parindent}{2em}          % 首行缩进两字符
+\setlength{\parskip}{0pt}
+\renewcommand{\baselinestretch}{1.2}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{蔬菜类商品自动定价与补货决策}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ========== 中文格式 ==========
+\ctexset{
+  section/format = {\bfseries \zihao{4}},
+  subsection/format = {\bfseries \zihao{-4}},
+}
+
+% ========== 标题 ==========
+\title{\textbf{蔬菜类商品自动定价与补货决策}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\input{paper/sections/q1_abstract_intro_analysis.tex}
+\newpage
+\input{paper/sections/q1_analysis.tex}
+\newpage
+\input{paper/sections/q2_analysis.tex}
+\newpage
+\input{paper/sections/q3_analysis.tex}
+\newpage
+\input{paper/sections/q4_and_conclusion.tex}
+
+\end{document}

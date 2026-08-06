@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 2026,
+  "approved_decision_id": "q1_method_choice",
+  "methods": [
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q1/q1_main.py",
+      "status": "success",
+      "execution_time_seconds": 0,
+      "input_files": [
+        "workspace/data_clean/sales_normal_only.csv",
+        "workspace/data_clean/product_info_with_loss.csv"
+      ],
+      "output_files": [
+        "results/Q1/experiments/round1/tables/q1_spearman_raw.csv",
+        "results/Q1/experiments/round1/tables/q1_spearman_residual.csv",
+        "results/Q1/experiments/round1/tables/q1_correlation_diff.csv",
+        "results/Q1/experiments/round1/tables/q1_granger_pvalues.csv",
+        "results/Q1/experiments/round1/tables/q1_item_cluster_labels.csv"
+      ],
+      "figure_files": [
+        "results/Q1/experiments/round1/figures/q1_cat_trend_decomposition.png",
+        "results/Q1/experiments/round1/figures/q1_corr_comparison.png",
+        "results/Q1/experiments/round1/figures/q1_granger_network.png",
+        "results/Q1/experiments/round1/figures/q1_item_clusters.png",
+        "results/Q1/experiments/round1/figures/q1_category_monthly_sales.png",
+        "results/Q1/experiments/round1/figures/q1_item_sales_concentration.png"
+      ],
+      "metrics_summary": {
+        "n_categories": 6,
+        "n_days": 1085,
+        "n_items_total": 246,
+        "n_stable_items": 116,
+        "spearman_raw_mean_abs": 0.3933467953556268,
+        "spearman_resid_mean_abs": 0.26564542732272045,
+        "raw_correlation_inflation": 0.07036444547523735,
+        "n_sig_residual_pairs": 15,
+        "top_correlation_pair": "水生根茎类-花叶类: 0.271",
+        "granger_significant_edges": 20,
+        "hc_ward_silhouette": {
+          "3": 0.16885937936172105,
+          "4": 0.1657219363393468,
+          "5": 0.17275684738707497
+        },
+        "kmeans_silhouette": {
+          "3": 0.18059279839354292,
+          "4": 0.17118217050854848,
+          "5": 0.12415004443620727
+        },
+        "item_sales_gini": -0.7932188777406988,
+        "prophet_used": false,
+        "adf_nonstationary_count": 0
+      },
+      "warnings": [
+        "130 items with <90 sales days excluded from item-level clustering",
+        "Prophet not available; used STL decomposition instead (install prophet for better results)"
+      ],
+      "errors": []
+    }
+  ],
+  "comparison": {
+    "M1_vs_literature": "M1 (residual Spearman) shows systematically lower correlations than raw — this is expected and desirable (removes common-trend pseudo-correlation)"
+  },
+  "fallback_trigger": {
+    "fallback_id": null,
+    "triggered": false
+  },
+  "environment": {
+    "python": "3.14.5",
+    "pandas": "3.0.3",
+    "numpy": "2.5.1",
+    "scipy": "1.18.0",
+    "prophet_available": false,
+    "date": "2026-08-06T17:13:43.333381"
+  }
+}

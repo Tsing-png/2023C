@@ -1,0 +1,60 @@
+{
+  "sku_target_sensitivity": {
+    "27": {
+      "n_selected": 27,
+      "profit": 1916.23,
+      "n_at_boundary": 27,
+      "category_mins": {
+        "水生根茎类": 4,
+        "花叶类": 9,
+        "花菜类": 1,
+        "茄类": 3,
+        "辣椒类": 6,
+        "食用菌": 4
+      }
+    },
+    "30": {
+      "n_selected": 30,
+      "profit": 2009.72,
+      "n_at_boundary": 30,
+      "category_mins": {
+        "水生根茎类": 4,
+        "花叶类": 11,
+        "花菜类": 1,
+        "茄类": 3,
+        "辣椒类": 6,
+        "食用菌": 5
+      }
+    },
+    "33": {
+      "n_selected": 33,
+      "profit": 2241.43,
+      "n_at_boundary": 33,
+      "category_mins": {
+        "水生根茎类": 5,
+        "花叶类": 12,
+        "花菜类": 1,
+        "茄类": 3,
+        "辣椒类": 7,
+        "食用菌": 5
+      }
+    }
+  },
+  "wholesale_sensitivity": {
+    "wp_x0.9": {
+      "profit": 1863.45,
+      "n_boundary": 30
+    },
+    "wp_x1.0": {
+      "profit": 2009.72,
+      "n_boundary": 30
+    },
+    "wp_x1.1": {
+      "profit": 2163.45,
+      "n_boundary": 30
+    }
+  },
+  "boundary_issue": "28/30 items at markup upper bound (150%) — consistent across all scenarios",
+  "category_bottleneck": "花菜类=2 items — no redundancy in any scenario",
+  "overall": "CONDITIONAL — profits stable across SKU targets and wholesale perturbations, but markup boundary saturation is a modeling limitation"
+}

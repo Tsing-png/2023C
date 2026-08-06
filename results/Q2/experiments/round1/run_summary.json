@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "question": "Q2",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 2026,
+  "approved_decision_id": "q2_method_choice",
+  "methods": [
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q2/q2_main.py",
+      "status": "success",
+      "input_files": [
+        "workspace/data_clean/sales_normal_only.csv",
+        "workspace/data_clean/wholesale_prices.csv",
+        "workspace/data_clean/product_info_with_loss.csv"
+      ],
+      "output_files": [
+        "results/Q2/experiments/round1/tables/q2_optimal_decisions.csv",
+        "results/Q2/experiments/round1/tables/q2_replenishment_pivot.csv",
+        "results/Q2/experiments/round1/tables/q2_pricing_pivot.csv",
+        "results/Q2/experiments/round1/tables/q2_markup_pivot.csv"
+      ],
+      "figure_files": [
+        "results/Q2/experiments/round1/figures/q2_optimal_plan.png",
+        "results/Q2/experiments/round1/figures/q2_markup_rates.png",
+        "results/Q2/experiments/round1/figures/q2_profit_robustness.png"
+      ],
+      "metrics_summary": {
+        "total_expected_profit_7d": 5088.38,
+        "total_profit_wp_plus10pct": 2845.83,
+        "profit_robustness_loss": 44.1,
+        "total_replenishment_kg": 1405.5,
+        "avg_markup_rate": 0.9477,
+        "profit_by_category": {
+          "水生根茎类": 14.43,
+          "花叶类": 2907.13,
+          "花菜类": 329.01,
+          "茄类": 33.77,
+          "辣椒类": 1796.73,
+          "食用菌": 7.31
+        },
+        "elasticity_estimates": {
+          "水生根茎类": -0.853,
+          "花叶类": -0.485,
+          "花菜类": -0.717,
+          "茄类": -1.48,
+          "辣椒类": -0.663,
+          "食用菌": -1.076
+        },
+        "elasticity_R2": {
+          "水生根茎类": 0.636,
+          "花叶类": 0.847,
+          "花菜类": 0.538,
+          "茄类": 0.505,
+          "辣椒类": 0.842,
+          "食用菌": 0.82
+        },
+        "forecast_date_range": "2023-07-01 ~ 2023-07-07"
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "comparison": {
+    "note": "M1 vs M2: M1 uses endogenous markup + newsvendor; M2 uses fixed r=0.20 + deterministic NLP"
+  },
+  "fallback_trigger": {
+    "fallback_id": null,
+    "triggered": false
+  },
+  "environment": {
+    "python": "3.14.5",
+    "date": "2026-08-06T19:08:05.623116",
+    "seed": 2026
+  }
+}

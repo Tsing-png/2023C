@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "rigor_profile": "submission",
+  "current_gate": "G6",
+  "status": "project_complete",
+  "blockers": [],
+  "next_action": {
+    "owner": null,
+    "skill": null,
+    "reason": "全部 gate 已通过。项目生成完毕，可交付。"
+  },
+  "updated_at": "2026-08-06T08:00:00Z"
+}

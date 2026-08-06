@@ -1,0 +1,15 @@
+{
+  "spearman_mean_abs": 0.3933467953556268,
+  "n_sig_pairs_raw": 15,
+  "n_sig_bonferroni": 15,
+  "category_kmeans_silhouette": {
+    "2": 0.28969296390955523,
+    "3": 0.3058831943307838
+  },
+  "item_kmeans_silhouette": {
+    "3": 0.18059279839354292,
+    "4": 0.17118217050854848,
+    "5": 0.12415004443620727
+  },
+  "n_stable_items": 116
+}

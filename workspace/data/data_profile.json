@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "raw_files": [
+    {
+      "name": "附件1.xlsx",
+      "role": "商品信息主表",
+      "rows": 251,
+      "columns": 4,
+      "id_field": "单品编码",
+      "shared_by": ["Q1", "Q2", "Q3", "Q4"]
+    },
+    {
+      "name": "附件2.xlsx",
+      "role": "销售流水明细",
+      "rows": 878503,
+      "columns": 7,
+      "date_field": "销售日期",
+      "date_range": "2020-07-01 ~ 2023-06-30",
+      "shared_by": ["Q1", "Q2", "Q3", "Q4"]
+    },
+    {
+      "name": "附件3.xlsx",
+      "role": "批发价格表",
+      "rows": 55982,
+      "columns": 3,
+      "date_field": "日期",
+      "shared_by": ["Q2", "Q3"]
+    },
+    {
+      "name": "附件4.xlsx",
+      "role": "损耗率表",
+      "sheets": ["品类级 (6行)", "单品级 (251行)"],
+      "shared_by": ["Q2", "Q3"]
+    }
+  ],
+  "attachment_mapping": [
+    {"attachment": "附件1", "maps_to": "Q1,Q2,Q3,Q4", "usage": "单品-品类映射主键"},
+    {"attachment": "附件2", "maps_to": "Q1,Q2,Q3", "usage": "核心分析数据源：销量、价格、时间、折扣"},
+    {"attachment": "附件3", "maps_to": "Q2,Q3", "usage": "成本基础：批发价格时间序列"},
+    {"attachment": "附件4", "maps_to": "Q2,Q3", "usage": "成本修正：损耗率"}
+  ],
+  "fields": [
+    {"field": "单品编码", "type": "int64 (15-digit)", "nulls": 0, "unique_values": 251, "notes": "无缺失，附件间一致"},
+    {"field": "单品名称", "type": "str", "nulls": 0, "unique_values": 251, "notes": "63/251 含供应商编号 (数字)"},
+    {"field": "品类编码", "type": "int64 (10-digit)", "nulls": 0, "unique_values": 6},
+    {"field": "品类名称", "type": "str", "nulls": 0, "unique_values": 6, "categories": ["花叶类 100", "食用菌 72", "花菜类 45", "水生根茎类 19", "辣椒类 10", "茄类 5"]},
+    {"field": "销量(kg)", "type": "float64", "nulls": 0, "range": "[-9.08, 160.00]", "notes": "负值=退货；退货 461 笔 (0.05%)"},
+    {"field": "销售单价(元/kg)", "type": "float64", "nulls": 0, "range": "[0.10, 119.90]", "mean": 8.92},
+    {"field": "销售类型", "type": "str", "nulls": 0, "values": {"销售": 878042, "退货": 461}},
+    {"field": "是否折扣销售", "type": "str", "nulls": 0, "values": {"否": 831137, "是": 47366}, "notes": "折扣率 5.4%"},
+    {"field": "批发价格(元/kg)", "type": "float64", "nulls": 0, "range": "[0.01, 141.00]", "mean": 5.96, "notes": "极值 >100 仅 4 行"},
+    {"field": "损耗率(%)", "type": "float64", "nulls": 0, "range_item": "[0.00, 29.25]", "mean": 9.43}
+  ],
+  "quality": {
+    "missingness": {
+      "summary": "零缺失值——四个附件均无 null",
+      "per_file": {
+        "附件1": "0 nulls",
+        "附件2": "0 nulls",
+        "附件3": "0 nulls",
+        "附件4": "0 nulls"
+      }
+    },
+    "duplicates": {
+      "附件1": "单品编码无重复，单品名称无重复",
+      "附件2": "流水数据无主键，允许重复行（同日同单品多次扫码正常）",
+      "附件3": "每个日期-单品组合应唯一，待验证",
+      "附件4": "无重复"
+    },
+    "impossible_values": {
+      "returns_as_negative_qty": "退货 461 行的销量(kg)为负值（正常——冲减销售），清洗时已分离",
+      "zero_price": "无零价或负价行",
+      "extreme_wholesale": "4 行批发价 >100 元/kg，对应 2 个单品（高山娃娃菜精品包装、小紫薯）",
+      "zero_loss": "部分单品损耗率报告为 0%，可能是新品或盘点刚结束"
+    },
+    "outliers": {
+      "qty_upper": "160 kg 单笔——超大单（可能是批发/团购），Q99=1.50 kg，需按情境处理",
+      "wholesale_upper": "141 元/kg（高山娃娃菜精品包装）——可能是稀有品种，非错误",
+      "sales_negative": "461 笔退货相当于负销量，在聚合分析中会抵消对应销售"
+    }
+  },
+  "coverage": {
+    "rows": {
+      "total_sales": 878503,
+      "normal_sales": 878042,
+      "returns": 461
+    },
+    "effective_sample_size": {
+      "fully_tradeable_items": 246,
+      "items_with_enough_history_30d": 159,
+      "items_with_enough_history_90d": 120,
+      "note": "246/251 个单品有销售记录；87 个不足 30 天数据（持续性差），建议在单品分析中标注或排除"
+    },
+    "time_range": {
+      "start": "2020-07-01",
+      "end": "2023-06-30",
+      "total_days": 1095,
+      "active_days": "~1091 (少量缺失日期)",
+      "gaps": "最大间隔 5 天，6 处 >1 天缺口",
+      "granularity": "流水级（扫码时间记录到毫秒）"
+    },
+    "time_gaps": {
+      "count": 6,
+      "max_gap_days": 5,
+      "significance": "小——不影响日级聚合"
+    }
+  },
+  "distribution_risks": {
+    "class_imbalance": {
+      "category_sales": {
+        "花叶类": "198,521 kg (42.2%)",
+        "辣椒类": "91,589 kg (19.4%)",
+        "食用菌": "76,087 kg (16.2%)",
+        "花菜类": "41,766 kg (8.9%)",
+        "水生根茎类": "40,581 kg (8.6%)",
+        "茄类": "22,432 kg (4.8%)"
+      },
+      "imbalance_ratio": 8.8,
+      "risk": "MEDIUM — 花叶类主导，辣椒类+食用菌合占 35.6%，茄类仅 4.8%，品类级模型需处理不均匀性"
+    },
+    "rare_categories": [
+      "茄类（5 个单品，4.8% 销量）——单品过少可能导致品类内部分析不可靠",
+      "辣椒类（10 个单品，19.4% 销量）——单品少但销量大，单品集中度极高"
+    ],
+    "high_cardinality": [
+      "单品编码：251（低——适于聚合）",
+      "日期：1096 天（按日聚合后为中等维度时间序列）"
+    ],
+    "redundancy_warnings": [
+      "单品编码与品类编码通过附件1 多对一映射，附件2/3 中品类可由单品编码还原——不存在冗余字段",
+      "部分单品名称仅供应商编号不同——本质是同一品种不同来源，对单品关联分析有意义"
+    ],
+    "concentration_metrics": {
+      "item_sales_gini": 0.793,
+      "top_10pct_items_share": "62.7%",
+      "top_20pct_items_share": "83.9%",
+      "risk": "HIGH — 单品销量高度集中（帕累托分布），预测模型中尾部单品可预测性差"
+    }
+  },
+  "seasonality_evidence": {
+    "monthly_sales_pattern": "8 月峰值 51,859 kg（夏菜旺季），5-6 月低谷 29,405-30,844 kg（春菜尾、夏菜初），季节性振幅约 1.7x",
+    "weekly_pattern": "待检验——日级数据可提取 day-of-week 效应",
+    "supply_side": "4-10 月供应品种更丰富（题目明确陈述），可能与 8 月销量峰值对应"
+  },
+  "per_question_readiness": {
+    "Q1": {
+      "status": "ready",
+      "warnings": [
+        "87 个单品销售历史 <30 天——单品分析时应标注或排除",
+        "246 个有记录的品单品中仅 159 个满足 30 天最低分析门槛",
+        "单品相关性分析建议限定于持续性好的子集（≥90 天记录，120 个单品）"
+      ],
+      "recommended_item_subset": "120 items with ≥90 sales days for robust correlation/clustering"
+    },
+    "Q2": {
+      "status": "ready",
+      "warnings": [
+        "品类日销量波动大（日 CV ~0.48），点预测误差需量化",
+        "批发价预测同样具有不确定性——6 月 30 日后无实际批发价，仅靠历史预测",
+        "损耗率使用近期固定值——长期趋势可能变化"
+      ]
+    },
+    "Q3": {
+      "status": "ready",
+      "warnings": [
+        "6 月 24-30 日实际在售品种 49 个——选品空间有限但真实",
+        "49 个候选单品中部分销售天数极少（一周内仅出 1-2 天）",
+        "最小陈列量 2.5kg 对所有品类均可行"
+      ]
+    },
+    "Q4": {
+      "status": "pending",
+      "reason": "需 Q1-Q3 执行完毕后从建模经验中提炼建议"
+    }
+  },
+  "cleaned_files": [
+    "workspace/data_clean/product_info.csv",
+    "workspace/data_clean/product_info_with_loss.csv",
+    "workspace/data_clean/sales_normal_only.csv",
+    "workspace/data_clean/wholesale_prices.csv"
+  ],
+  "unresolved_risks": [
+    {
+      "risk": "退货行中的负销量：已在清洗文件中排除退货，在构建需求模型时可能需要将退货量从当日销量中扣除",
+      "severity": "LOW"
+    },
+    {
+      "risk": "单品持续性不足：87 个单品有效历史 <30 天，Q1 单品分析需要排除或标记",
+      "severity": "MEDIUM"
+    },
+    {
+      "risk": "损失率时不变假设：附件4 仅提供单一近期损耗率，2020-2022 年损耗率未知，无法建模长期趋势",
+      "severity": "LOW"
+    },
+    {
+      "risk": "批发价极端值：1 个单品（高山娃娃菜精品包装，批发价 141 元/kg）可能影响品类均价",
+      "severity": "LOW"
+    }
+  ]
+}

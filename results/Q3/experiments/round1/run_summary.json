@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "question": "Q3",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 2026,
+  "approved_decision_id": "q3_method_choice",
+  "methods": [
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q3/q3_main.py",
+      "status": "success",
+      "input_files": [
+        "workspace/data_clean/*.csv"
+      ],
+      "output_files": [
+        "results/Q3/experiments/round1/tables/q3_selected_items.csv",
+        "results/Q3/experiments/round1/tables/q3_category_summary.csv"
+      ],
+      "figure_files": [
+        "results/Q3/experiments/round1/figures/q3_item_profit_scatter.png",
+        "results/Q3/experiments/round1/figures/q3_category_fulfillment.png",
+        "results/Q3/experiments/round1/figures/q3_item_markup_rates.png"
+      ],
+      "metrics_summary": {
+        "n_items_selected": 30,
+        "sku_range_check": "[27, 33] -> 30",
+        "min_2_5kg_check": true,
+        "category_min_check": true,
+        "total_expected_profit_1d": 2060.19,
+        "total_replenishment_kg": 121.19,
+        "avg_markup_rate": 294.2,
+        "profit_by_category": {
+          "食用菌": 229.03,
+          "花叶类": 685.1,
+          "茄类": 164.68,
+          "花菜类": 244.11,
+          "水生根茎类": 352.25,
+          "辣椒类": 385.02
+        },
+        "kg_by_category": {
+          "食用菌": 13.5,
+          "花叶类": 51.1,
+          "茄类": 10.7,
+          "花菜类": 8.4,
+          "水生根茎类": 10.0,
+          "辣椒类": 27.5
+        },
+        "n_negative_profit_items": 0
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "fallback_trigger": {
+    "fallback_id": "F1",
+    "condition": "花菜类 items with negative margin under k>=2 constraint",
+    "triggered": false,
+    "evidence": null
+  },
+  "environment": {
+    "python": "3.14.5",
+    "date": "2026-08-06T19:08:08.933251",
+    "seed": 2026
+  }
+}

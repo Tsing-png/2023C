@@ -1,0 +1,48 @@
+{
+  "frozen_at": "2026-08-06T19:09:02.943840",
+  "frozen_from": {
+    "Q1": "results/Q1/experiments/round1/metrics/q1_metrics.json",
+    "Q2": "results/Q2/experiments/round1/metrics/q2_metrics.json",
+    "Q3": "results/Q3/experiments/round1/metrics/q3_metrics.json"
+  },
+  "Q1": {
+    "spearman_raw_mean_abs": 0.3933467953556268,
+    "spearman_resid_mean_abs": 0.26564542732272045,
+    "correlation_inflation": 0.128,
+    "granger_significant_edges": 20,
+    "item_sales_gini": 0.7932188777406988,
+    "top_category_corr": "花叶类-花菜类 r=0.633",
+    "n_stable_items": 116
+  },
+  "Q2": {
+    "total_expected_profit_7d_yuan": 5088.36,
+    "total_replenishment_kg": 1405.5,
+    "avg_markup_rate": 95.2,
+    "profit_by_category": {
+      "水生根茎类": 14.43,
+      "花叶类": 2907.13,
+      "花菜类": 329.01,
+      "茄类": 33.77,
+      "辣椒类": 1796.73,
+      "食用菌": 7.31
+    },
+    "profit_robustness_range": "elasticity-20%: +40.7%, elasticity+20%: -30.7%, sigma_x2: loss",
+    "note": "Markup cap raised from 150% to 300%; profit increased from 2,587 to 5,088 yuan"
+  },
+  "Q3": {
+    "n_items_selected": 30,
+    "total_expected_profit_1d_yuan": 2060.36,
+    "total_replenishment_kg": 121.3,
+    "profit_by_category": {
+      "食用菌": 126.3,
+      "花叶类": 391.87,
+      "茄类": 101.77,
+      "花菜类": 170.97,
+      "水生根茎类": 190.72,
+      "辣椒类": 243.58
+    },
+    "n_boundary_items": 30,
+    "bottleneck_category": "花菜类 (2 candidates)",
+    "note": "Markup cap raised from 150% to 300%; avg markup now 294.2%, boundary still binding at 300%"
+  }
+}

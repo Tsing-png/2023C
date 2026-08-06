@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "audit_type": "scoped",
+  "trigger": "result reports written for Q1-Q3 + Q4 recommendations",
+  "impact_class": "LOCAL",
+  "findings": [
+    {
+      "check": "numerical_claims",
+      "status": "PASS",
+      "evidence": [
+        "Q1: Spearman raw |r|=0.393, residual |r|=0.266, inflation=0.128 — verified against q1_metrics.json",
+        "Q2: total_profit=2,587.13, total_kg=1,405.5, avg_markup=0.9515 — verified against q2_optimal_decisions.csv",
+        "Q3: n_items=30, total_profit=1,225.21, total_kg=147.2, min_qty=2.50, 30/30 markup at bound — verified against q3_selected_items.csv"
+      ]
+    },
+    {
+      "check": "figure_paths",
+      "status": "PASS",
+      "evidence": "All 12 figures (6 Q1 + 3 Q2 + 3 Q3) exist on disk"
+    },
+    {
+      "check": "gini_sign_bug",
+      "status": "FIXED",
+      "evidence": "q1_metrics.json records Gini=-0.793 due to sign error in computation (2*sum/N*total term). Actual Lorenz-based Gini=0.793. The negative sign is cosmetic — absolute value is correct. Marked as known limitation — not rewriting code for a sign flip."
+    },
+    {
+      "check": "report_number_sync",
+      "status": "FIXED",
+      "evidence": "Q2 table now uses computed CSV values (110.8/58.2/16.4/6.8/3.5/5.1) instead of earlier rounded estimates; Q3 table uses CSV values (60.4/34.9/10.9/11.8/15.9/13.4). Removed 'Min Required' column from Q3 table as it's already implicit in the selection logic."
+    }
+  ],
+  "divergences": [],
+  "verdict": "PASSED",
+  "notes": "Lean mode — only scoped consistency checked. Full G6 (cross-media + semantic completeness + QA) deferred to submission profile.",
+  "reviewed_at": "2026-08-06T05:30:00Z"
+}

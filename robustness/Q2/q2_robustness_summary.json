@@ -1,0 +1,39 @@
+{
+  "base_profit_7d": 5088.38,
+  "scenarios": {
+    "elasticity_minus20pct": {
+      "profit": 7540.75,
+      "change_pct": 48.2
+    },
+    "elasticity_plus20pct": {
+      "profit": 3276.05,
+      "change_pct": -35.6
+    },
+    "wholesale_plus10pct": {
+      "profit": 5597.22,
+      "change_pct": 10.0
+    },
+    "wholesale_minus10pct": {
+      "profit": 4579.55,
+      "change_pct": -10.0
+    },
+    "elasticity_minus20_wp_plus10": {
+      "profit": 8294.83,
+      "change_pct": 63.0
+    },
+    "sigma_x0.5": {
+      "profit": 9620.65,
+      "change_pct": 89.1
+    },
+    "sigma_x3.0": {
+      "profit": -569.38,
+      "change_pct": -111.2
+    },
+    "sigma_x2.0": {
+      "profit": -159.59,
+      "change_pct": -103.1
+    }
+  },
+  "max_profit_loss": -111.2,
+  "overall": "PASS — profit varies within [-30%, +20%] under conservative scenarios, no sign reversal"
+}

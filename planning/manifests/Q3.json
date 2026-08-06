@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "question_id": "Q3",
+  "rigor_profile": "lean",
+  "current_gate": "G4",
+  "status": "robustness_checked",
+  "blockers": [],
+  "next_action": {
+    "owner": "ai",
+    "skill": "result-report-generator",
+    "reason": "G4 lean 完成"
+  },
+  "updated_at": "2026-08-06T05:00:00Z"
+}
