@@ -30,13 +30,13 @@
 
 \subsubsection{上层，品类配额}
 
-各品类最低 SKU 数按候选池占比比例分配，目标总数 $S=30$（区间 $[27,33]$ 中点）：
+各品类最低 SKU 数按候选池占比比例分配，目标总数 $S=30$（区间 $[27,33]$ 中点），
 
 \begin{equation}
 k_i = \text{clip}\left( \text{round}\left( \frac{n_i}{\sum_j n_j} \times S \right), 1, n_i \right)
 \end{equation}
 
-花菜类候选只有 $2$ 个但按比例至少要有 $2$ 个，所以 $k=2$，两个全取。分配结果：花叶类 $10$、辣椒类 $6$、食用菌 $5$、水生根茎类 $4$、茄类 $3$、花菜类 $2$。剩余 $\sum k_i - 30$ 个名额按评分从高到低补满。
+花菜类候选只有 $2$ 个但按比例至少要有 $2$ 个，所以 $k=2$，两个全取。分配结果，花叶类 $10$、辣椒类 $6$、食用菌 $5$、水生根茎类 $4$、茄类 $3$、花菜类 $2$。剩余 $\sum k_i - 30$ 个名额按评分从高到低补满。
 
 \subsubsection{下层，单品评分与选品}
 
@@ -52,7 +52,7 @@ s_j = 0.5 \cdot \frac{m_j}{\max(m)} + 0.3 \cdot \frac{d_j}{\max(d)} + 0.2 \cdot 
 
 \subsubsection{单品最优定价}
 
-入选单品独立优化加成率。需求函数复用 Q2 估计的品类级弹性 $\beta_{C(j)}$（这里用了品类弹性近似单品弹性，后面会专门讨论这个问题）：
+入选单品独立优化加成率。需求函数复用 Q2 估计的品类级弹性 $\beta_{C(j)}$（这里用了品类弹性近似单品弹性，后面会专门讨论这个问题），
 
 \begin{equation}
 r_j^* = \arg\max_{r \in [0.05, 3.0]} \quad (P_j(r) - C_{\text{eff},j}) \cdot \max\left(d_{\text{base},j} \cdot \left(\frac{P_j}{P_{\text{hist},j}}\right)^{\beta_{C(j)}}, 2.5\right)

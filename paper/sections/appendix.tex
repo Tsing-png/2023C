@@ -1,0 +1,138 @@
+\newpage
+\section{附录}
+
+\subsection{附录A，核心代码逻辑}
+
+以下列出问题二主方法（报童内生加成率优化）的核心实现逻辑，完整代码见随论文提交的电子版附件。
+
+\subsubsection{双对数需求弹性估计}
+
+使用 statsmodels 的 OLS 对每个品类估计自价格弹性：
+
+\begin{verbatim}
+for cat in all_categories:
+    y = np.log(qty_pivot[cat].clip(lower=1))
+    X = pd.DataFrame()
+    for cat2 in all_categories:
+        X[f'lnP_{cat2}'] = np.log(price_pivot[cat2].clip(lower=0.1))
+    X['ln_spend'] = np.log(total_spend.clip(lower=1))
+    X['month'] = pd.to_datetime(qty_pivot.index).month
+    model = sm.OLS(y_valid, sm.add_constant(X_valid)).fit()
+    elasticity[cat] = model.params[f'lnP_{cat}']
+\end{verbatim}
+
+\subsubsection{报童优化求解}
+
+对每个品类每天，Brent 算法求最优加成率：
+
+\begin{verbatim}
+def expected_profit(r):
+    r = max(0.01, min(r, 3.0))
+    price = eff_cost * (1 + r)
+    mu_adj = mu_base * ((1 + r) ** own_elast)
+    cu, co = price - eff_cost, eff_cost
+    cr = np.clip(cu / (cu + co), 0.01, 0.99)
+    z = norm.ppf(cr)
+    Q_opt = max(mu_adj + sigma * z, 0.1)
+    loss_z = norm.pdf(z) - z * (1 - norm.cdf(z))
+    exp_sales = max(mu_adj - sigma * loss_z, 0)
+    return -(price * exp_sales - eff_cost * Q_opt)
+
+result = optimize.minimize_scalar(expected_profit,
+    bounds=(0.05, 3.0), method='bounded')
+\end{verbatim}
+
+\subsection{附录B，关键数值表}
+
+\subsubsection{各品类最优决策（7月1日-7日）}
+
+\begin{table}[H]
+\centering
+\caption{问题二各品类7天最优日平均补货量与定价}
+\begin{tabular}{lcccc}
+\hline
+品类 & 日均补货量 (kg) & 售价 (元/kg) & 最优加成率 & 7天总利润 (元) \\
+\hline
+花叶类 & 110.8 & 10.59 & 150\% & 2,907.1 \\
+辣椒类 & 58.2 & 16.32 & 150\% & 1,796.7 \\
+花菜类 & 16.4 & 23.44 & 150\% & 329.0 \\
+茄类 & 6.8 & 7.00 & 46\% & 33.8 \\
+水生根茎类 & 3.5 & 19.92 & 46\% & 14.4 \\
+食用菌 & 5.1 & 6.66 & 29\% & 7.3 \\
+\hline
+合计 & 200.8 & -- & -- & 5,088.4 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{问题三入选单品清单（7月1日）}
+
+\begin{table}[H]
+\centering
+\caption{问题三30个入选单品各品类汇总}
+\begin{tabular}{lcccc}
+\hline
+品类 & 入选数 & 总补货量 (kg) & 总利润 (元) & 平均加成率 \\
+\hline
+花叶类 & 10 & 60.4 & 391.9 & 294\% \\
+辣椒类 & 6 & 34.9 & 243.6 & 294\% \\
+水生根茎类 & 4 & 10.9 & 190.7 & 294\% \\
+花菜类 & 2 & 11.8 & 171.0 & 294\% \\
+食用菌 & 5 & 15.9 & 126.3 & 294\% \\
+茄类 & 3 & 13.4 & 101.8 & 294\% \\
+\hline
+合计 & 30 & 147.2 & 1,225.2 & 294\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{附录C，敏感性实验完整结果}
+
+\begin{table}[H]
+\centering
+\caption{问题二敏感性实验完整数据}
+\begin{tabular}{lcc}
+\hline
+扰动场景 & 7天利润 (元) & 利润变化 \\
+\hline
+基线（无扰动） & 5,088 & -- \\
+弹性 $-20\%$ & 7,159 & +40.7\% \\
+弹性 $+20\%$ & 3,528 & -30.7\% \\
+批发价 $+10\%$ & 5,597 & +10.0\% \\
+批发价 $-10\%$ & 4,579 & -10.0\% \\
+弹性 $-20\%$ 且批发价 $+10\%$ & 7,876 & +54.8\% \\
+$\sigma \times 0.5$ & 11,978 & +135.4\% \\
+$\sigma \times 2.0$ & -132 & -102.6\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{附录D，品类相关性完整数据}
+
+\begin{table}[H]
+\centering
+\caption{去趋势前后Spearman相关系数对比}
+\begin{tabular}{lcc}
+\hline
+品类对 & 原始 Spearman & 残差 Spearman \\
+\hline
+花叶类--花菜类 & 0.633 & 0.295 \\
+花叶类--辣椒类 & 0.595 & 0.333 \\
+花叶类--水生根茎类 & 0.439 & 0.271 \\
+花叶类--茄类 & 0.253 & 0.228 \\
+花叶类--食用菌 & 0.596 & 0.357 \\
+花菜类--辣椒类 & 0.430 & 0.250 \\
+花菜类--水生根茎类 & 0.396 & 0.217 \\
+花菜类--茄类 & 0.193 & 0.218 \\
+花菜类--食用菌 & 0.462 & 0.234 \\
+辣椒类--水生根茎类 & 0.334 & 0.237 \\
+辣椒类--茄类 & 0.104 & 0.256 \\
+辣椒类--食用菌 & 0.535 & 0.359 \\
+水生根茎类--茄类 & -0.210 & 0.203 \\
+水生根茎类--食用菌 & 0.605 & 0.275 \\
+茄类--食用菌 & -0.115 & 0.253 \\
+\hline
+平均绝对相关 & 0.393 & 0.266 \\
+\hline
+\end{tabular}
+\end{table}
