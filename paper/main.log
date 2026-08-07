@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.23)  7 AUG 2026 09:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.23)  7 AUG 2026 17:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1060,7 +1060,7 @@ rm/m/n/12/54 Á \C70/rm/m/n/12/76 „ \C70/rm/m/n/12/95 ^^@ \C70/rm/m/n/12/55 . \C
  []
 
 [3] [4] [5]
-<figures/fig_q1_corr.png, id=364, 978.054pt x 427.3566pt>
+<figures/fig_q1_corr.png, id=362, 978.054pt x 427.3566pt>
 File: figures/fig_q1_corr.png Graphic file (type png)
 <use figures/fig_q1_corr.png>
 Package pdftex.def Info: figures/fig_q1_corr.png  used on input line 172.
@@ -1117,7 +1117,7 @@ m/m/n/12/57 G \C70/rm/m/n/12/76 ô \C70/rm/m/n/12/63 ¥ \C70/rm/m/n/12/4f ^^? \C7
 n|\C70/rm/m/n/12/ff ^^L|
  []
 
-<figures/fig_q1_granger.png, id=389, 570.933pt x 498.663pt>
+<figures/fig_q1_granger.png, id=387, 570.933pt x 498.663pt>
 File: figures/fig_q1_granger.png Graphic file (type png)
 <use figures/fig_q1_granger.png>
 Package pdftex.def Info: figures/fig_q1_granger.png  used on input line 225.
@@ -1135,7 +1135,7 @@ rm/m/n/12/52 6\OT1/cmr/m/n/12 Lorenz\C70/rm/m/n/12/66 ò \C70/rm/m/n/12/7e ¿|\C7
 $[]$|\C70/rm/m/n/12/ff ^^L|
  []
 
-<figures/fig_q1_lorenz.png, id=397, 571.4148pt x 426.393pt>
+<figures/fig_q1_lorenz.png, id=395, 571.4148pt x 426.393pt>
 File: figures/fig_q1_lorenz.png Graphic file (type png)
 <use figures/fig_q1_lorenz.png>
 Package pdftex.def Info: figures/fig_q1_lorenz.png  used on input line 239.
@@ -1146,7 +1146,7 @@ Overfull \hbox (14.19269pt too wide) in paragraph at lines 254--264
  []
 
 [10 <C:/Users/HUAWEI/Desktop/2023C/paper/figures/fig_q1_lorenz.png>]
-<figures/fig_q2_plan.png, id=416, 1150.5384pt x 709.2096pt>
+<figures/fig_q2_plan.png, id=414, 1150.5384pt x 709.2096pt>
 File: figures/fig_q2_plan.png Graphic file (type png)
 <use figures/fig_q2_plan.png>
 Package pdftex.def Info: figures/fig_q2_plan.png  used on input line 274.
@@ -1179,20 +1179,6 @@ C70/rm/m/n/12/8f £ \C70/rm/m/n/12/69 ^^R \C70/rm/m/n/12/7c {|\C70/rm/m/n/12/ff
  []
 
 [12] [13]
-Overfull \hbox (7.99211pt too wide) in paragraph at lines 377--378
-\C70/rm/m/n/12/98 „ \C70/rm/m/n/12/77 å \C70/rm/m/n/12/5f S \C70/rm/m/n/12/65 å
- \C70/rm/m/n/12/97 ^^@ \C70/rm/m/n/12/6c B|\C70/rm/m/n/12/30 ^^B| \OT1/cmr/m/n/
-12 M2\C70/rm/m/n/12/76 „ \C70/rm/m/n/12/9a Ø \C70/rm/m/n/12/52 ) \C70/rm/m/n/12
-/6d ¦ \C70/rm/m/n/12/66 /\OT1/cmr/m/n/12 "\C70/rm/m/n/12/4e P \C70/rm/m/n/12/89
- Â \C70/rm/m/n/12/50 O \C70/rm/m/n/12/4f 0\OT1/cmr/m/n/12 " |\C70/rm/m/n/12/20 
-^^T||^^T| \C70/rm/m/n/12/50 G \C70/rm/m/n/12/8b ¾ \C70/rm/m/n/12/4f ` \C70/rm/m
-/n/12/77 å \C70/rm/m/n/12/90 S \C70/rm/m/n/12/66 ^^N \C70/rm/m/n/12/59 ) \C70/r
-m/m/n/12/52 0 \C70/rm/m/n/12/5e • \C70/rm/m/n/12/53 V \C70/rm/m/n/12/59 ^^Z \C7
-0/rm/m/n/12/5c ^^Q|\C70/rm/m/n/12/30 ^^B| \OT1/cmr/m/n/12 M1\C70/rm/m/n/12/76 „
-\OT1/cmr/m/n/12 5,088\C70/rm/m/n/12/51 C
- []
-
-
 Overfull \hbox (19.06618pt too wide) in paragraph at lines 377--378
 \C70/rm/m/n/12/52 ›|\C70/rm/m/n/12/ff ^^L| \C70/rm/m/n/12/53 Í \C70/rm/m/n/12/8
 b Á \C70/rm/m/n/12/4e † \C70/rm/m/n/12/53 Ì \C70/rm/m/n/12/5b ù \C70/rm/m/n/12/
@@ -1222,14 +1208,14 @@ C70/rm/m/n/12/81 ô \C70/rm/m/n/12/52 ) \C70/rm/m/n/12/6d ¦ \C70/rm/m/n/12/6c â
  []
 
 [14]
-<figures/fig_q3_scatter.png, id=454, 860.4948pt x 498.663pt>
+<figures/fig_q3_scatter.png, id=452, 860.4948pt x 498.663pt>
 File: figures/fig_q3_scatter.png Graphic file (type png)
 <use figures/fig_q3_scatter.png>
 Package pdftex.def Info: figures/fig_q3_scatter.png  used on input line 411.
 (pdftex.def)             Requested size: 386.96027pt x 224.2517pt.
  [15 <C:/Users/HUAWEI/Desktop/2023C/paper/figures/fig_q3_scatter.png>]
 [16]
-<figures/fig_q3_fulfillment.png, id=470, 950.1096pt x 426.393pt>
+<figures/fig_q3_fulfillment.png, id=468, 950.1096pt x 426.393pt>
 File: figures/fig_q3_fulfillment.png Graphic file (type png)
 <use figures/fig_q3_fulfillment.png>
 Package pdftex.def Info: figures/fig_q3_fulfillment.png  used on input line 484
@@ -1272,19 +1258,15 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 LaTeX2e <2025-11-01>
 L3 programming layer <2026/07/01>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: BD5BD8533D7311870FABF5D61B601E48;4881.
  ) 
 Here is how much of TeX's memory you used:
- 17560 strings out of 467871
- 296490 string characters out of 5417892
- 717833 words of memory out of 5000000
- 45741 multiletter control sequences out of 15000+600000
- 693090 words of font info for 279 fonts, out of 8000000 for 9000
+ 17556 strings out of 467871
+ 296436 string characters out of 5417892
+ 717832 words of memory out of 5000000
+ 45739 multiletter control sequences out of 15000+600000
+ 692820 words of font info for 278 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  78i,13n,92p,1061b,582s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/s
@@ -1302,12 +1284,12 @@ tf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/
 simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOW
 S/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simhei.ttf><C
 :/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhe
-i.ttf><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fon
+i.ttf><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fon
 ts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WIN
-DOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf
-><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/si
+DOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simsun.ttc
+><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/si
 mhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/
-Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/
+Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simsun.ttc><C:/
 WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.
 ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts
 /simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDO
@@ -1332,30 +1314,30 @@ simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOW
 S/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C
 :/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsu
 n.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fon
-ts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WIN
+ts/simsun.ttc><C:/WINDOWS/Fonts/simsun.ttc><C:/WINDOWS/Fonts/simhei.ttf><C:/WIN
 DOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf
 ><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/si
 mhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/
 Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/
 WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/WINDOWS/Fonts/simhei.
-ttf><C:/WINDOWS/Fonts/simhei.ttf><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/HUAWEI/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/HUAWEI/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/HUAWEI
-/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Use
-rs/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pf
-b><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmr12.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
-sfonts/cm/cmr6.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmr8.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/HUAWEI/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/HUAWEI/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Users/HUAWEI/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on C:\Users\HUAWEI\Desktop\2023C\paper\main.pdf (23 pages, 16558
-47 bytes).
+ttf><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmbx12.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmex10.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmmi12.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/HUAWEI/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/HUAWEI/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HUAWEI/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/
+HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C
+:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cms
+y10.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmsy8.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmtt12.pfb><C:/Users/HUAWEI/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on C:\Users\HUAWEI\Desktop\2023C\paper\main.pdf (23 pages, 16508
+89 bytes).
 PDF statistics:
- 1024 PDF objects out of 1200 (max. 8388607)
+ 1019 PDF objects out of 1200 (max. 8388607)
  102 named destinations out of 1000 (max. 500000)
- 623 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 619 words of extra memory for PDF output out of 10000 (max. 10000000)
 
