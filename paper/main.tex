@@ -540,19 +540,20 @@ SKU目标从27增至33时，利润从1,136线性增长至1,336元。批发价$\p
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lll}
+\small
+\begin{tabular}{p{3.5cm}p{6cm}p{2.5cm}}
 \toprule
 文件名 & 功能描述 & 位置 \\
 \midrule
-\texttt{data\_audit.py} & 数据质量审计与清洗 & \texttt{workspace/code/scripts/} \\
-\texttt{risk\_probes.py} & 方法风险探针（Q1-Q3） & \texttt{workspace/code/scripts/} \\
-\texttt{robustness\_checks.py} & 鲁棒性检验（Q1-Q3） & \texttt{workspace/code/scripts/} \\
-\texttt{q1\_main.py} & Q1主方法：STL分解+Spearman+Granger+DTW聚类 & \texttt{code/Q1/} \\
-\texttt{q1\_baseline.py} & Q1基线：原始Spearman+K-means++ & \texttt{code/Q1/} \\
-\texttt{q2\_main.py} & Q2主方法：双对数弹性+报童内生优化 & \texttt{code/Q2/} \\
-\texttt{q2\_baseline.py} & Q2基线：ARIMA+线性回归+固定加成率 & \texttt{code/Q2/} \\
-\texttt{q3\_main.py} & Q3主方法：双层规划选品+定价联合优化 & \texttt{code/Q3/} \\
-\texttt{q3\_baseline.py} & Q3基线：贪心选品+固定加成率 & \texttt{code/Q3/} \\
+\texttt{data\_audit.py} & 数据质量审计与清洗 & scripts/ \\
+\texttt{risk\_probes.py} & 方法风险探针（Q1--Q3） & scripts/ \\
+\texttt{robustness\_checks.py} & 鲁棒性检验（Q1--Q3） & scripts/ \\
+\texttt{q1\_main.py} & Q1主：STL+Spearman+Granger+DTW聚类 & code/Q1/ \\
+\texttt{q1\_baseline.py} & Q1基线：原始Spearman+K-means++ & code/Q1/ \\
+\texttt{q2\_main.py} & Q2主：双对数弹性+报童内生优化 & code/Q2/ \\
+\texttt{q2\_baseline.py} & Q2基线：ARIMA+线性回归+固定加成率 & code/Q2/ \\
+\texttt{q3\_main.py} & Q3主：双层规划选品+定价联合优化 & code/Q3/ \\
+\texttt{q3\_baseline.py} & Q3基线：贪心选品+固定加成率 & code/Q3/ \\
 \bottomrule
 \end{tabular}
 \caption{代码文件说明}
